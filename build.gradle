@@ -191,18 +191,12 @@ dependencies {
     implementation(files("libs/iris-neoforge-1.8.12+mc1.21.1.jar"))
     implementation(files("libs/createpropulsion-1.1.4.jar"))
     implementation(files("libs/create_aeronautics_toolgun-0.2.3.jar"))
-    // Drive By Wire (Sable port) - compileOnly: provided at runtime by the modpack.
-    // Referenced to patch its unbounded SavedData growth / wire pollution bug.
     compileOnly(files("libs/drivebywire-0.2.9.jar"))
-
-    // DrinkBeer Refill - compileOnly: provided at runtime by the modpack.
-    // Referenced to patch SpiceData.fromSpiceList IndexOutOfBounds when fewer than 3 spices are added.
     compileOnly(files("libs/drinkbeer-refill-1.21.1-1.2.0.jar"))
-
-    // Supplementaries (+ Moonlight lib) - compileOnly: provided at runtime by the modpack.
-    // Referenced to patch BellowsBlockTile.inLineOfSight which force-loads chunks (deadlocks under C2ME,
-    // especially once the bellows is physicalized by Sable).
     compileOnly(files("libs/supplementaries-neoforge-1.21.1-3.6.6.jar"))
+    compileOnly(files("libs/struts-1.2.5.jar"))
+    compileOnly(files("libs/tongdarailway-1.1.3.jar"))
+
 
 //    jarJar()
 }
