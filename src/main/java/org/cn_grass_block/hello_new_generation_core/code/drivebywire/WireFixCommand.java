@@ -22,13 +22,8 @@ import org.cn_grass_block.hello_new_generation_core.HelloNewGenerationCoreMod;
  * pollution lives. Requires permission level 2 (op).
  */
 public final class WireFixCommand {
-
-    private WireFixCommand() {
-    }
-
     public static void register(final CommandDispatcher<CommandSourceStack> dispatcher) {
-        final LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("dbwfix")
-            .requires(source -> source.hasPermission(2));
+        final LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("dbwfix").requires(source -> source.hasPermission(2));
 
         root.then(Commands.literal("scan").executes(ctx -> {
             final CommandSourceStack source = ctx.getSource();
@@ -40,9 +35,7 @@ public final class WireFixCommand {
         root.then(Commands.literal("scanall").executes(ctx -> {
             final CommandSourceStack source = ctx.getSource();
             int total = 0;
-            for (final ServerLevel level : source.getServer().getAllLevels()) {
-                total += scanLevel(source, level);
-            }
+            for (final ServerLevel level : source.getServer().getAllLevels()) total += scanLevel(source, level);
             final int finalTotal = total;
             source.sendSuccess(() -> Component.literal(
                 "[drivebywire-fix] scanall complete: removed " + finalTotal + " orphaned connection(s) across all dimensions."), true);
@@ -52,7 +45,6 @@ public final class WireFixCommand {
         dispatcher.register(root);
     }
 
-    /** Runs a forced scan on one level, reports to the command source and the log, and returns connections removed. */
     private static int scanLevel(final CommandSourceStack source, final ServerLevel level) {
         final String dim = level.dimension().location().toString();
         source.sendSuccess(() -> Component.literal("[drivebywire-fix] Scanning " + dim + " (this force-loads chunks, may take a moment)..."), false);
@@ -66,9 +58,7 @@ public final class WireFixCommand {
             return 0;
         }
 
-        final String summary = String.format(
-            "[drivebywire-fix] %s: %d endpoint(s), %d chunk(s) loaded, %d dead endpoint(s), %d connection(s) removed.",
-            dim, result.endpoints(), result.chunksLoaded(), result.deadEndpoints(), result.removedConnections());
+        final String summary = String.format("[drivebywire-fix] %s: %d endpoint(s), %d chunk(s) loaded, %d dead endpoint(s), %d connection(s) removed.", dim, result.endpoints(), result.chunksLoaded(), result.deadEndpoints(), result.removedConnections());
         HelloNewGenerationCoreMod.LOGGER.info(summary);
         source.sendSuccess(() -> Component.literal(summary), true);
         return result.removedConnections();

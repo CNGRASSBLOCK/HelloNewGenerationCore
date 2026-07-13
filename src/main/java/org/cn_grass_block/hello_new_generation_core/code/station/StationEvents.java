@@ -10,10 +10,6 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
  * main-thread chunk-load handler that places towns around captured stations.
  */
 public final class StationEvents {
-
-    private StationEvents() {
-    }
-
     @SubscribeEvent
     public static void onRegisterCommands(final RegisterCommandsEvent event) {
         StationDebugCommand.register(event.getDispatcher());

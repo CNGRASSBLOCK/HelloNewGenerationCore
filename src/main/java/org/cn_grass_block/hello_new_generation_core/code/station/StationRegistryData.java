@@ -32,29 +32,19 @@ public class StationRegistryData extends SavedData {
      * One observed station. {@code typeOrdinal} is {@code StationType.ordinal()} (0 = NORMAL, 1 = UNDER_GROUND);
      * we store the ordinal rather than the enum so this class has zero compile-time dependency on TongDa.
      */
-    public record StationRecord(BlockPos pos, int typeOrdinal, int stationId, int exitCount) {
-    }
+    public record StationRecord(BlockPos pos, int typeOrdinal, int stationId, int exitCount) { }
 
     private final List<StationRecord> stations = new ArrayList<>();
 
-    public StationRegistryData() {
-    }
-
     /** Get (or create) the registry for the given level. */
     public static StationRegistryData get(final ServerLevel level) {
-        return level.getDataStorage().computeIfAbsent(
-            new Factory<>(StationRegistryData::new, StationRegistryData::load),
-            DATA_NAME);
+        return level.getDataStorage().computeIfAbsent(new Factory<>(StationRegistryData::new, StationRegistryData::load), DATA_NAME);
     }
 
     /** Record a station if we have not already seen one at this exact position. Returns true if newly added. */
     public boolean addStation(final BlockPos pos, final int typeOrdinal, final int stationId, final int exitCount) {
         final BlockPos immutable = pos.immutable();
-        for (final StationRecord existing : stations) {
-            if (existing.pos().equals(immutable)) {
-                return false;
-            }
-        }
+        for (final StationRecord existing : stations) if (existing.pos().equals(immutable)) return false;
         stations.add(new StationRecord(immutable, typeOrdinal, stationId, exitCount));
         setDirty();
         return true;
@@ -86,11 +76,7 @@ public class StationRegistryData extends SavedData {
         for (int i = 0; i < list.size(); i++) {
             final CompoundTag entry = list.getCompound(i);
             final BlockPos pos = NbtUtils.readBlockPos(entry, "pos").orElse(BlockPos.ZERO);
-            data.stations.add(new StationRecord(
-                pos,
-                entry.getInt("type"),
-                entry.getInt("id"),
-                entry.getInt("exits")));
+            data.stations.add(new StationRecord(pos, entry.getInt("type"), entry.getInt("id"), entry.getInt("exits")));
         }
         return data;
     }
