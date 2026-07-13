@@ -14,7 +14,12 @@
     "create.MixinBlazeBurnerBlock",
     "create.MixinSchematicPlacePacket",
     "createaddition.MixinLiquidBlazeBurnerBlock",
-    "minecraft.MixinBlock"
+    "minecraft.MixinBlock",
+    "drivebywire.MixinWireNetworkFullSyncPacket",
+    "supplementaries.MixinBellowsBlockTile",
+    "drinkbeer.MixinBartendingTableBlock",
+    "drinkbeer.MixinBartendingTableBlockEntity",
+    "drinkbeer.MixinMixedBeerManager"
   ],
   "client": [
   ],
