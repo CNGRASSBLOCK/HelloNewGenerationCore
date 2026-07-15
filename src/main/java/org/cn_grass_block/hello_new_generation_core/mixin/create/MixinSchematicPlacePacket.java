@@ -1,6 +1,5 @@
 package org.cn_grass_block.hello_new_generation_core.mixin.create;
 
-import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
 import com.simibubi.create.content.schematics.packet.SchematicPlacePacket;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;

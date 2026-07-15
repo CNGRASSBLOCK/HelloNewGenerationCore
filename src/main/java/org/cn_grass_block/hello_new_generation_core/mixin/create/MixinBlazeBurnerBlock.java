@@ -1,7 +1,5 @@
 package org.cn_grass_block.hello_new_generation_core.mixin.create;
 
-import com.llamalad7.mixinextras.sugar.Local;
-import com.simibubi.create.AllItems;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
 import net.minecraft.core.BlockPos;

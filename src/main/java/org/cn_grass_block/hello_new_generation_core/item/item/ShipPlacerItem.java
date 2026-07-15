@@ -2,19 +2,12 @@ package org.cn_grass_block.hello_new_generation_core.item.item;
 
 import com.enxv.aeronauticsstructuretool.SubLevelFileStore;
 import com.simibubi.create.AllDataComponents;
-import com.simibubi.create.AllItems;
 import com.simibubi.create.content.schematics.SchematicItem;
 import com.simibubi.create.content.schematics.packet.SchematicPlacePacket;
 import dev.rew1nd.sableschematicapi.blueprint.tool.BlueprintToolService;
-import dev.rew1nd.sableschematicapi.network.BlueprintToolActionPayload;
-import dev.rew1nd.sableschematicapi.network.BlueprintToolServerActions;
-import dev.rew1nd.sableschematicapi.network.SableSchematicApiPackets;
 import dev.rew1nd.sableschematicapi.tool.client.storage.BlueprintToolLocalFiles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
-import net.minecraft.core.component.PatchedDataComponentMap;
-import net.minecraft.core.component.TypedDataComponent;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -75,13 +68,5 @@ public class ShipPlacerItem extends Item {
 
         this_item.shrink(1);
         return InteractionResultHolder.success(this_item);
-    }
-
-    static CompoundTag writeVec3(Vec3 vec) {
-        CompoundTag tag = new CompoundTag();
-        tag.putDouble("x", vec.x);
-        tag.putDouble("y", vec.y);
-        tag.putDouble("z", vec.z);
-        return tag;
     }
 }

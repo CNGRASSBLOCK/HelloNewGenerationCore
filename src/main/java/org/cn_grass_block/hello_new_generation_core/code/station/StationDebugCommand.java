@@ -50,19 +50,6 @@ public final class StationDebugCommand {
         ResourceLocation.fromNamespaceAndPath("minecraft", "village_plains");
 
     /**
-     * Village structures tried by {@code villageauto}, in order. Each is overridden by Lukis Grand Capitals to a
-     * grand-capital pool. We try them in turn and keep the first whose structure validates at the target site —
-     * the structure's own biome restriction does the biome matching for us, so no hardcoded biome map is needed.
-     */
-    private static final ResourceLocation[] AUTO_VILLAGES = {
-        ResourceLocation.fromNamespaceAndPath("minecraft", "village_plains"),
-        ResourceLocation.fromNamespaceAndPath("minecraft", "village_desert"),
-        ResourceLocation.fromNamespaceAndPath("minecraft", "village_savanna"),
-        ResourceLocation.fromNamespaceAndPath("minecraft", "village_snowy"),
-        ResourceLocation.fromNamespaceAndPath("minecraft", "village_taiga"),
-    };
-
-    /**
      * Lukis Grand Capitals start pools tried by {@code villageauto}, in order. We use the supported
      * {@link net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement#generateJigsaw} path (same as
      * {@code /place jigsaw}) which force-places a pool at an exact position — unlike {@code Structure.generate},
@@ -254,42 +241,6 @@ public final class StationDebugCommand {
             return true;
         } catch (final Throwable t) {
             HelloNewGenerationCoreMod.LOGGER.error("[hng-station] error placing pool {} at {}", poolId, pos, t);
-            return false;
-        }
-    }
-
-    /**
-     * Attempt to generate {@code structureId} at {@code pos}. Returns false (no message) if the structure is
-     * unknown or fails biome/terrain validation, so callers can fall through to the next candidate. On success
-     * it places the structure and reports it. Never throws.
-     */
-    private static boolean tryPlaceStructure(final CommandSourceStack source, final ServerLevel level,
-                                             final BlockPos pos, final ResourceLocation structureId) {
-        try {
-            final ResourceKey<Structure> key = ResourceKey.create(Registries.STRUCTURE, structureId);
-            final Holder<Structure> holder = level.registryAccess()
-                .registryOrThrow(Registries.STRUCTURE).getHolder(key).orElse(null);
-            if (holder == null) {
-                return false;
-            }
-            final Structure structure = holder.value();
-            final ChunkGenerator gen = level.getChunkSource().getGenerator();
-            final StructureStart start = structure.generate(
-                level.registryAccess(), gen, gen.getBiomeSource(),
-                level.getChunkSource().randomState(), level.getStructureManager(),
-                level.getSeed(), new ChunkPos(pos), 0, level, b -> true);
-            if (!start.isValid()) {
-                HelloNewGenerationCoreMod.LOGGER.info("[hng-station]   {} -> INVALID_START (no generation point)", structureId);
-                return false;
-            }
-            placeStart(level, gen, start);
-            final BoundingBox bb = start.getBoundingBox();
-            source.sendSuccess(() -> Component.literal(String.format(
-                "[hng-station] auto-placed %s on town edge, bbox %d,%d,%d -> %d,%d,%d",
-                structureId, bb.minX(), bb.minY(), bb.minZ(), bb.maxX(), bb.maxY(), bb.maxZ())), true);
-            return true;
-        } catch (final Throwable t) {
-            HelloNewGenerationCoreMod.LOGGER.error("[hng-station] error trying {} at {}", structureId, pos, t);
             return false;
         }
     }
