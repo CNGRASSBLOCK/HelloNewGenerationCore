@@ -186,7 +186,7 @@ public final class StationDebugCommand {
 
     /**
      * Milestone-3 core: at the nearest station, place a town on its edge, auto-selecting the village type that
-     * fits the local biome. Tries each candidate in {@link #AUTO_VILLAGES}; the first whose structure validates
+     * fits the local biome. Tries each candidate in {@link #AUTO_START_POOLS}; the first whose structure validates
      * at the target site wins (the structure's own biome restriction performs the matching). Reports which one.
      */
     private static int runVillageAuto(final CommandSourceStack source) {

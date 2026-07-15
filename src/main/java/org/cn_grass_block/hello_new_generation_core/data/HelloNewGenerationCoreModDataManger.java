@@ -44,7 +44,7 @@ public class HelloNewGenerationCoreModDataManger {
             if (types != null) type = types.split(",");
             for (int i = 0; i < type.length; i++) {
                 type[i] = type[i].trim();
-                if (!type[i].equals("create") && !type[i].equals("sable")) type[i] = "create";
+                if (!type[i].equals("create") && !type[i].equals("sable") && !type[i].equals("tool")) type[i] = "create";
             }
             String paths = br.readLine();
             if (paths != null) path = paths.split(",");
