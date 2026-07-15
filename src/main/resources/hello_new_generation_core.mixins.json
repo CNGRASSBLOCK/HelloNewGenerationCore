@@ -21,7 +21,9 @@
     "supplementaries.MixinBellowsBlockTile",
     "drinkbeer.MixinBartendingTableBlock",
     "drinkbeer.MixinBartendingTableBlockEntity",
-    "drinkbeer.MixinMixedBeerManager"
+    "drinkbeer.MixinMixedBeerManager",
+    "drinkbeer.MixinSpiceData",
+    "simulated.MixinServerLevelRopeManager"
   ],
   "client": [
   ],

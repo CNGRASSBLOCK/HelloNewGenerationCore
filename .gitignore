@@ -40,3 +40,6 @@ repo/
 !**/src/**/repo/
 
 *.log
+
+### Local build/staging artifacts ###
+.mod-snapshots/
