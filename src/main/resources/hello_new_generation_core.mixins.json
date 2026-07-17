@@ -18,6 +18,8 @@
     "minecraft.MixinTreasureMapForEmeralds",
     "drivebywire.MixinWireNetworkFullSyncPacket",
     "struts.MixinGirderStrutShapeRegistry",
+    "tongdarailway.MixinModSaveData",
+    "bitsntracks.MixinBntPhysicsEvents",
     "supplementaries.MixinBellowsBlockTile",
     "drinkbeer.MixinBartendingTableBlock",
     "drinkbeer.MixinBartendingTableBlockEntity",
