@@ -7,6 +7,7 @@
   "mixins": [
     "MixinDeployerBlockEntity",
     "createaeronautics.MixinAbstractLaserRenderer",
+    "createaeronautics.MixinClientBalloonEffectRenderer",
     "cbc.MixinAutocannonBaseBlock",
     "cbc.MixinAutocannonBlockItem",
     "cbc.MixinBigCannonBaseBlock",
