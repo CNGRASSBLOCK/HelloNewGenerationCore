@@ -27,7 +27,8 @@
     "drinkbeer.MixinMixedBeerManager",
     "drinkbeer.MixinSpiceData",
     "simulated.MixinServerLevelRopeManager",
-    "yuushya.MixinItemBlock"
+    "yuushya.MixinItemBlock",
+    "simulated.MixinLinkedTypewriterInteractionHandler"
   ],
   "client": [
   ],
