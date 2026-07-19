@@ -28,7 +28,8 @@
     "drinkbeer.MixinSpiceData",
     "simulated.MixinServerLevelRopeManager",
     "yuushya.MixinItemBlock",
-    "simulated.MixinLinkedTypewriterInteractionHandler"
+    "simulated.MixinLinkedTypewriterInteractionHandler",
+    "cbc.MixinCBCMSSoundEvents"
   ],
   "client": [
   ],
