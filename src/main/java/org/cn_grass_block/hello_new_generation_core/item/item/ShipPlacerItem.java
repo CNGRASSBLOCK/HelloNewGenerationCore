@@ -53,7 +53,7 @@ public class ShipPlacerItem extends Item {
             } else if (schematic_type.equals("sable")) {
                 byte[] data = new byte[0];
                 try {
-                    data = BlueprintToolLocalFiles.read(new BlueprintToolLocalFiles.Entry(schematic_name, Path.of(".\\Sable-Schematics\\hello_new_generation_core\\" + schematic_path)));
+                    data = BlueprintToolLocalFiles.read(new BlueprintToolLocalFiles.Entry(schematic_name, Path.of("Sable-Schematics", "hello_new_generation_core", schematic_path)));
                 } catch (IOException ignored) {
                 }
 
