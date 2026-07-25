@@ -29,7 +29,8 @@
     "simulated.MixinServerLevelRopeManager",
     "yuushya.MixinItemBlock",
     "simulated.MixinLinkedTypewriterInteractionHandler",
-    "cbc.MixinCBCMSSoundEvents"
+    "cbc.MixinCBCMSSoundEvents",
+    "create.MixinContinuousSeparationManifold"
   ],
   "client": [
   ],
