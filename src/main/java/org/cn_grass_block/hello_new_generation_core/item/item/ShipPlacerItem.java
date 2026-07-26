@@ -19,10 +19,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.fml.loading.FMLPaths;
 import org.cn_grass_block.hello_new_generation_core.HelloNewGenerationCoreMod;
 import org.cn_grass_block.hello_new_generation_core.data.HelloNewGenerationCoreModDataManger;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
@@ -53,16 +55,28 @@ public class ShipPlacerItem extends Item {
             } else if (schematic_type.equals("sable")) {
                 byte[] data = new byte[0];
                 try {
-                    Path schematic_file = Path.of(".", "Sable-Schematics", "hello_new_generation_core", schematic_path.replace('\\', '/'));
+                    Path schematic_file = FMLPaths.CONFIGDIR.get()
+                            .resolve("hello_new_generation_core")
+                            .resolve("schematics")
+                            .resolve("sable")
+                            .resolve(schematic_path.replace('\\', '/'));
                     data = BlueprintToolLocalFiles.read(new BlueprintToolLocalFiles.Entry(schematic_name, schematic_file));
-                } catch (IOException ignored) {
+                } catch (IOException e) {
+                    HelloNewGenerationCoreMod.LOGGER.error("Failed to read sable schematic: {}", e.toString());
                 }
 
                 BlueprintToolService.loadBytes((ServerLevel) level, pos, data, schematic_name);
             } else if (schematic_type.equals("tool")) {
                 try {
-                    SubLevelFileStore.load((ServerLevel) level, BlockPos.containing(pos.x(), pos.y(), pos.z()), Direction.UP, schematic_path.replace(".excraft", ""));
-                } catch (IOException ignored) {
+                    Path schematic_file = FMLPaths.CONFIGDIR.get()
+                            .resolve("hello_new_generation_core")
+                            .resolve("schematics")
+                            .resolve("toolgun")
+                            .resolve(schematic_path.replace('\\', '/'));
+                    byte[] data = Files.readAllBytes(schematic_file);
+                    SubLevelFileStore.load((ServerLevel) level, BlockPos.containing(pos.x(), pos.y(), pos.z()), Direction.UP, schematic_path.replace(".excraft", ""), data);
+                } catch (IOException e) {
+                    HelloNewGenerationCoreMod.LOGGER.error("Failed to read toolgun schematic: {}", e.toString());
                 }
             }
         }
