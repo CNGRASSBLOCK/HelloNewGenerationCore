@@ -30,7 +30,8 @@
     "yuushya.MixinItemBlock",
     "simulated.MixinLinkedTypewriterInteractionHandler",
     "cbc.MixinCBCMSSoundEvents",
-    "create.MixinContinuousSeparationManifold"
+    "create.MixinContinuousSeparationManifold",
+    "aeroengineering.MixinEngineStructure"
   ],
   "client": [
   ],

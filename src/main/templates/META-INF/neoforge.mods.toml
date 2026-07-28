@@ -42,7 +42,7 @@ displayName="${mod_name}" #mandatory
 #credits="" #optional
 
 # The authors of the mod, displayed in the mod UI (optional)
-authors="CN_GOOD_GRASS"
+authors="CN_GOOD_GRASS&CN-YiMin"
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
