@@ -5,11 +5,10 @@ import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.content.schematics.SchematicItem;
 import com.simibubi.create.content.schematics.packet.SchematicPlacePacket;
 import dev.rew1nd.sableschematicapi.blueprint.tool.BlueprintToolService;
-import dev.rew1nd.sableschematicapi.tool.client.storage.BlueprintToolLocalFiles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -40,48 +39,73 @@ public class ShipPlacerItem extends Item {
 
         if (!level.isClientSide) {
             String schematic_name = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(shipPlacerItem)).getPath();
-            CompoundTag schematic_data = HelloNewGenerationCoreModDataManger.ship_blueprint_map.get(schematic_name);
-            String schematic_type = schematic_data.getString("type");
-            String schematic_path = schematic_data.getString("path");
+            HelloNewGenerationCoreModDataManger.BlueprintData schematic_data = HelloNewGenerationCoreModDataManger.ship_blueprint_map.get(schematic_name);
+            String schematic_type = schematic_data.type();
+            String schematic_path = schematic_data.path();
 
             Vec3 pos = player.pick(20, 0, true).getLocation();
 
+            boolean success = false;
             if (schematic_type.equals("create")) {
                 ItemStack schematicItem = SchematicItem.create(level, schematic_path, HelloNewGenerationCoreMod.MODID);
                 schematicItem.set(AllDataComponents.SCHEMATIC_ANCHOR, new BlockPos((int) pos.x(), (int) pos.y(), (int) pos.z()));
 
                 SchematicPlacePacket packet = new SchematicPlacePacket(schematicItem);
                 packet.handle((ServerPlayer) player);
+                success = true;  // Create handles its own validation; assume success if packet sent
             } else if (schematic_type.equals("sable")) {
-                byte[] data = new byte[0];
                 try {
-                    Path schematic_file = FMLPaths.CONFIGDIR.get()
+                    Path sableDir = FMLPaths.CONFIGDIR.get()
                             .resolve("hello_new_generation_core")
                             .resolve("schematics")
-                            .resolve("sable")
-                            .resolve(schematic_path.replace('\\', '/'));
-                    data = BlueprintToolLocalFiles.read(new BlueprintToolLocalFiles.Entry(schematic_name, schematic_file));
-                } catch (IOException e) {
-                    HelloNewGenerationCoreMod.LOGGER.error("Failed to read sable schematic: {}", e.toString());
-                }
+                            .resolve("sable");
+                    Path schematic_file = sableDir.resolve(schematic_path.replace('\\', '/')).normalize();
 
-                BlueprintToolService.loadBytes((ServerLevel) level, pos, data, schematic_name);
+                    // Path-traversal guard: keep resolved file inside the sable folder.
+                    if (!schematic_file.startsWith(sableDir)) {
+                        HelloNewGenerationCoreMod.LOGGER.warn("Path traversal attempt blocked for sable schematic: {}", schematic_path);
+                        player.displayClientMessage(Component.translatable("hello_new_generation_core.blueprint.invalid_path"), true);
+                        return InteractionResultHolder.fail(this_item);
+                    }
+
+                    byte[] data = Files.readAllBytes(schematic_file);
+                    BlueprintToolService.loadBytes((ServerLevel) level, pos, data, schematic_name);
+                    success = true;
+                } catch (IOException e) {
+                    HelloNewGenerationCoreMod.LOGGER.error("Failed to read sable schematic '{}': {}", schematic_name, e.toString());
+                    player.displayClientMessage(Component.translatable("hello_new_generation_core.blueprint.load_failed", schematic_name), true);
+                    return InteractionResultHolder.fail(this_item);
+                }
             } else if (schematic_type.equals("tool")) {
                 try {
-                    Path schematic_file = FMLPaths.CONFIGDIR.get()
+                    Path toolgunDir = FMLPaths.CONFIGDIR.get()
                             .resolve("hello_new_generation_core")
                             .resolve("schematics")
-                            .resolve("toolgun")
-                            .resolve(schematic_path.replace('\\', '/'));
+                            .resolve("toolgun");
+                    Path schematic_file = toolgunDir.resolve(schematic_path.replace('\\', '/')).normalize();
+
+                    // Path-traversal guard: keep resolved file inside the toolgun folder.
+                    if (!schematic_file.startsWith(toolgunDir)) {
+                        HelloNewGenerationCoreMod.LOGGER.warn("Path traversal attempt blocked for toolgun schematic: {}", schematic_path);
+                        player.displayClientMessage(Component.translatable("hello_new_generation_core.blueprint.invalid_path"), true);
+                        return InteractionResultHolder.fail(this_item);
+                    }
+
                     byte[] data = Files.readAllBytes(schematic_file);
                     SubLevelFileStore.load((ServerLevel) level, BlockPos.containing(pos.x(), pos.y(), pos.z()), Direction.UP, schematic_path.replace(".excraft", ""), data);
+                    success = true;
                 } catch (IOException e) {
-                    HelloNewGenerationCoreMod.LOGGER.error("Failed to read toolgun schematic: {}", e.toString());
+                    HelloNewGenerationCoreMod.LOGGER.error("Failed to read toolgun schematic '{}': {}", schematic_name, e.toString());
+                    player.displayClientMessage(Component.translatable("hello_new_generation_core.blueprint.load_failed", schematic_name), true);
+                    return InteractionResultHolder.fail(this_item);
                 }
+            }
+
+            if (success) {
+                this_item.shrink(1);
             }
         }
 
-        this_item.shrink(1);
         return InteractionResultHolder.success(this_item);
     }
 }

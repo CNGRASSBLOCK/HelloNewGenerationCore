@@ -1,6 +1,5 @@
 package org.cn_grass_block.hello_new_generation_core.data;
 
-import net.minecraft.nbt.CompoundTag;
 import net.neoforged.fml.loading.FMLPaths;
 import org.cn_grass_block.hello_new_generation_core.HelloNewGenerationCoreMod;
 
@@ -30,7 +29,12 @@ import java.util.stream.Stream;
  * {@code ship_blueprint.txt} three-line CSV, which was fragile and easy to misalign.
  */
 public class HelloNewGenerationCoreModDataManger {
-    public static final Map<String, CompoundTag> ship_blueprint_map = new HashMap<>();
+    /**
+     * Blueprint metadata: item id → (type token, relative file path).
+     */
+    public record BlueprintData(String type, String path) {}
+
+    public static final Map<String, BlueprintData> ship_blueprint_map = new HashMap<>();
 
     /**
      * Folder name → blueprint type token consumed by {@code ShipPlacerItem}, in scan-priority
@@ -83,10 +87,7 @@ public class HelloNewGenerationCoreModDataManger {
                         continue;
                     }
 
-                    CompoundTag data = new CompoundTag();
-                    data.putString("type", type);
-                    data.putString("path", relPath);
-                    ship_blueprint_map.put(id, data);
+                    ship_blueprint_map.put(id, new BlueprintData(type, relPath));
                 }
             } catch (IOException e) {
                 HelloNewGenerationCoreMod.LOGGER.error("Failed to scan schematic dir {}: {}", typeDir, e.toString());
