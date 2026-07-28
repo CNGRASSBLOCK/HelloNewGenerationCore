@@ -18,7 +18,7 @@ public class HelloNewGenerationCoreMod {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public HelloNewGenerationCoreMod(IEventBus modEventBus, ModContainer modContainer) {
-        HelloNewGenerationCoreModDataManger.readJson();
+        HelloNewGenerationCoreModDataManger.scanBlueprints();
 
         HelloNewGenerationCoreModItems.register(modEventBus);
 

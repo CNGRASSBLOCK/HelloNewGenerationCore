@@ -31,6 +31,7 @@
     "simulated.MixinLinkedTypewriterInteractionHandler",
     "cbc.MixinCBCMSSoundEvents",
     "create.MixinContinuousSeparationManifold",
+    "create.MixinSchematicItem",
     "aeroengineering.MixinEngineStructure"
   ],
   "client": [
