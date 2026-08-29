@@ -21,6 +21,7 @@
     "struts.MixinGirderStrutShapeRegistry",
     "tongdarailway.MixinModSaveData",
     "bitsntracks.MixinBntPhysicsEvents",
+    "bossesrise.MixinUndyingTentacleItem",
     "supplementaries.MixinBellowsBlockTile",
     "drinkbeer.MixinBartendingTableBlock",
     "drinkbeer.MixinBartendingTableBlockEntity",
@@ -28,11 +29,13 @@
     "drinkbeer.MixinSpiceData",
     "simulated.MixinServerLevelRopeManager",
     "yuushya.MixinItemBlock",
+    "farmandcharm.MixinStorageBlockSlotBounds",
     "simulated.MixinLinkedTypewriterInteractionHandler",
     "cbc.MixinCBCMSSoundEvents",
     "create.MixinContinuousSeparationManifold",
     "create.MixinSchematicItem",
-    "aeroengineering.MixinEngineStructure"
+    "aeroengineering.MixinEngineStructure",
+    "createsubmarine.MixinCompartmentTracker"
   ],
   "client": [
   ],
