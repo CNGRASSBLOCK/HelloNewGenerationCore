@@ -30,6 +30,7 @@
     "simulated.MixinServerLevelRopeManager",
     "yuushya.MixinItemBlock",
     "farmandcharm.MixinStorageBlockSlotBounds",
+    "gantry.MixinGantryCarriageAnchorProgress",
     "simulated.MixinLinkedTypewriterInteractionHandler",
     "cbc.MixinCBCMSSoundEvents",
     "create.MixinContinuousSeparationManifold",
