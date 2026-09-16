@@ -1,4 +1,4 @@
-{
+﻿{
   "required": false,
   "minVersion": "0.8",
   "package": "org.cn_grass_block.hello_new_generation_core.mixin",
@@ -30,7 +30,6 @@
     "simulated.MixinServerLevelRopeManager",
     "yuushya.MixinItemBlock",
     "farmandcharm.MixinStorageBlockSlotBounds",
-    "gantry.MixinGantryCarriageAnchorProgress",
     "simulated.MixinLinkedTypewriterInteractionHandler",
     "cbc.MixinCBCMSSoundEvents",
     "create.MixinContinuousSeparationManifold",
