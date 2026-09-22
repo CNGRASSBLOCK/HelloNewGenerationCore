@@ -13,7 +13,6 @@
     "cbc.MixinBigCannonBaseBlock",
     "cbc.MixinBigCannonBlockItem",
     "create.MixinBlazeBurnerBlock",
-    "create.MixinSchematicPlacePacket",
     "createaddition.MixinLiquidBlazeBurnerBlock",
     "minecraft.MixinBlock",
     "minecraft.MixinTreasureMapForEmeralds",
@@ -33,7 +32,6 @@
     "simulated.MixinLinkedTypewriterInteractionHandler",
     "cbc.MixinCBCMSSoundEvents",
     "create.MixinContinuousSeparationManifold",
-    "create.MixinSchematicItem",
     "aeroengineering.MixinEngineStructure",
     "createsubmarine.MixinCompartmentTracker"
   ],
